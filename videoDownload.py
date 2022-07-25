@@ -16,7 +16,7 @@ def fetchVideos(query,videoduration = "short"):
     
     
     
-    videosSearch = CustomSearch(query,limit = 3,searchPreferences=VideoDurationFilter.short)
+    videosSearch = CustomSearch(query,limit = 100,searchPreferences=VideoDurationFilter.short)
     res = videosSearch.result()["result"]
     
     links = []
@@ -27,7 +27,7 @@ def fetchVideos(query,videoduration = "short"):
 
 
 
-def downloadAudios(links : list,filepath : str):
+def downloadVideos(links : list,filepath : str):
     """Downloads the audio files.
 
     Args:
@@ -37,8 +37,8 @@ def downloadAudios(links : list,filepath : str):
 
     os.chdir(filepath)
     prefix = "https://www.youtube.com/watch?v="
-    
-    yt_dlp.YoutubeDL().download([prefix + x for x in links])
+    opts = {"format" : "mp4"}
+    yt_dlp.YoutubeDL(opts).download([prefix + x for x in links])
 
 
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
     
     links = fetchVideos(query=q)
     
-    downloadAudios(links,"/Users/macbookpro/Desktop/Sarama/YoutubeCrawler/videos/")
+    downloadVideos(links,"/Users/macbookpro/Desktop/Sarama/YoutubeCrawler/videos/")
     
     videonames = os.listdir("/Users/macbookpro/Desktop/Sarama/YoutubeCrawler/videos/")
     prefix = "/Users/macbookpro/Desktop/Sarama/YoutubeCrawler/videos/"
